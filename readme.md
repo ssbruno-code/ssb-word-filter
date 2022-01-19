@@ -1,4 +1,4 @@
-## Simples Plugin para contagem de caracteres, palavras e prever o tempo de leitura do post.
+## Plugin para filtrar palafras e substituir por um input do usuário.
 
 ### ☕ Esse código é livre pra qualquer tipo de uso.
 
@@ -9,7 +9,7 @@
 #### Informaçoes: https://ssbruno.com
 
 ## English
-## Simple Plugin for counting characters, words and predicting post reading time.
+## Plugin to filter words and replace with user input
 
 ### ☕ This code is free for any kind of use.
 
