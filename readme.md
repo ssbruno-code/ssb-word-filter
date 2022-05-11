@@ -1,8 +1,8 @@
-## Plugin para filtrar palafras e substituir por um input do usuário.
+## Plugin para filtrar palavras e substituir por um input do usuário.
 
 ### ☕ Esse código é livre pra qualquer tipo de uso.
 
-#### O objetivo de fazer este plugin foi trabalhar com diferentes funções dentro da Otions Api do wordpress, trabalhando com strings e salvando dados dentro do banco de dados de uma forma diferente.
+#### O objetivo de fazer este plugin foi trabalhar com diferentes funções dentro da Options Api do wordpress, trabalhando com strings e salvando dados dentro do banco de dados de uma forma diferente.
 
 #### Qualquer contribuição é bem-vinda.
 
