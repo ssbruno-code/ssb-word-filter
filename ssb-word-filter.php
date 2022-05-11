@@ -14,48 +14,38 @@ if(! defined( 'ABSPATH' )) exit;
 class SsbWordFilter{
   function __construct(){
 
-    add_action('admin_menu', array($this, 'theMenu'));
-    add_action( 'admin_init', array($this, 'ssbSettings'));
-    
-    if(get_option( 'plugin_words_to_filter')) add_filter('the_content', array($this, 'filterLogic'));
+    add_action( 'admin_menu', [ $this, 'theMenu' ] );
+    add_action( 'admin_init', [ $this, 'ssbSettings' ]);    
+    if( get_option( 'plugin_words_to_filter') ) add_filter( 'the_content', [ $this, 'filterLogic' ] );
 
   }
 
   function ssbSettings(){
-    add_settings_section( 'replacement-text-section', null, null, 'ssb-word-filter-options');
-    register_setting('replacementFields', 'replacementText');
-    add_settings_field( 'replacement-text', 'Filtered Text', array($this, 'replacementFieldHTML'), 'ssb-word-filter-options', 'replacement-text-section' );
+    add_settings_section( 'replacement-text-section', null, null, 'ssb-word-filter-options' );
+    register_setting( 'replacementFields', 'replacementText' );
+    add_settings_field( 'replacement-text', 'Filtered Text', [ $this, 'replacementFieldHTML' ], 'ssb-word-filter-options', 'replacement-text-section' );
   }
 
-  function filterLogic($content){
-
-    $badWords = explode(',', get_option('plugin_words_to_filter'));
-    $badWordsTrimmed = array_map('trim', $badWords);
-    return str_ireplace($badWordsTrimmed, esc_html(get_option('replacementText', '***')), $content);
-
+  function filterLogic( $content ){
+    $badWords = explode( ',', get_option( 'plugin_words_to_filter' ) );
+    $badWordsTrimmed = array_map( 'trim', $badWords );
+    return str_ireplace( $badWordsTrimmed, esc_html( get_option( 'replacementText', '***' ) ), $content );
   }
   
   function theMenu(){
-
-    $mainPageHook = add_menu_page('Words to Filter', 'SSB Word Filter', 'manage_options', 'ssb-word-filter', array($this, 'wordFilterPage'), 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMCAyMEMxNS41MjI5IDIwIDIwIDE1LjUyMjkgMjAgMTBDMjAgNC40NzcxNCAxNS41MjI5IDAgMTAgMEM0LjQ3NzE0IDAgMCA0LjQ3NzE0IDAgMTBDMCAxNS41MjI5IDQuNDc3MTQgMjAgMTAgMjBaTTExLjk5IDcuNDQ2NjZMMTAuMDc4MSAxLjU2MjVMOC4xNjYyNiA3LjQ0NjY2SDEuOTc5MjhMNi45ODQ2NSAxMS4wODMzTDUuMDcyNzUgMTYuOTY3NEwxMC4wNzgxIDEzLjMzMDhMMTUuMDgzNSAxNi45Njc0TDEzLjE3MTYgMTEuMDgzM0wxOC4xNzcgNy40NDY2NkgxMS45OVoiIGZpbGw9IiNGRkRGOEQiLz4KPC9zdmc+', 100);
-    add_submenu_page( 'ssb-word-filter', 'Words to Filter', 'Word List', 'manage_options', 'ssb-word-filter', array($this, 'wordFilterPage'));
-    add_submenu_page( 'ssb-word-filter', 'Word Filter Options', 'Options', 'manage_options', 'ssb-word-filter-options', array($this, 'optionsSubPage'));
-    add_action("load-{$mainPageHook}", array($this, 'mainPageAssets'));
-    
-
+    $mainPageHook = add_menu_page( 'Words to Filter', 'SSB Word Filter', 'manage_options', 'ssb-word-filter', [ $this, 'wordFilterPage' ], 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMCAyMEMxNS41MjI5IDIwIDIwIDE1LjUyMjkgMjAgMTBDMjAgNC40NzcxNCAxNS41MjI5IDAgMTAgMEM0LjQ3NzE0IDAgMCA0LjQ3NzE0IDAgMTBDMCAxNS41MjI5IDQuNDc3MTQgMjAgMTAgMjBaTTExLjk5IDcuNDQ2NjZMMTAuMDc4MSAxLjU2MjVMOC4xNjYyNiA3LjQ0NjY2SDEuOTc5MjhMNi45ODQ2NSAxMS4wODMzTDUuMDcyNzUgMTYuOTY3NEwxMC4wNzgxIDEzLjMzMDhMMTUuMDgzNSAxNi45Njc0TDEzLjE3MTYgMTEuMDgzM0wxOC4xNzcgNy40NDY2NkgxMS45OVoiIGZpbGw9IiNGRkRGOEQiLz4KPC9zdmc+', 100 );
+    add_submenu_page( 'ssb-word-filter', 'Words to Filter', 'Word List', 'manage_options', 'ssb-word-filter', [ $this, 'wordFilterPage' ] );
+    add_submenu_page( 'ssb-word-filter', 'Word Filter Options', 'Options', 'manage_options', 'ssb-word-filter-options', [ $this, 'optionsSubPage' ] );
+    add_action( "load-{$mainPageHook}", [ $this, 'mainPageAssets' ] );
   }
 
   function mainPageAssets(){
-
     wp_enqueue_style( 'filterAdminCss', plugin_dir_url(__FILE__) . 'styles.css' );
-
   }
 
   function handleForm(){
-
-    if(wp_verify_nonce( $_POST['ourNonce'], 'saveFilterWords' ) AND current_user_can('manage_options')){
-
-      update_option('plugin_words_to_filter', sanitize_text_field($_POST['plugin_words_to_filter'])); ?>
+    if( wp_verify_nonce( $_POST['ourNonce'], 'saveFilterWords' ) AND current_user_can( 'manage_options' ) ){
+      update_option( 'plugin_words_to_filter', sanitize_text_field( $_POST['plugin_words_to_filter'] ) ); ?>
       <div class="updated">
         <p>Your filtered words were saved.</p>
       </div>
